@@ -6,6 +6,10 @@ public class Book extends Person{
     private int publishYear;
     private int quantity;
 
+    public Book() {
+        
+    }
+
     public Book(String name, int id, String author, 
                 String specialization, int publishYear, 
                 int quantity) {

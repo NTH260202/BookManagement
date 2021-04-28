@@ -4,6 +4,10 @@ public class Reader extends Person{
     private String address;
     private int phone;
 
+    public Reader() {
+        
+    }
+
     public Reader(String name, int id, String address, int phone) {
         super(name, id);
         this.address = address;
@@ -26,3 +30,8 @@ public class Reader extends Person{
         return phone;
     }
 }
+
+
+
+
+

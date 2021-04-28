@@ -7,6 +7,10 @@ public class Management {
     private String state;
     private int numOfTotalBorrowed;
 
+    public Management() {
+        
+    }
+
     public Management(Book books, Reader readers, int numOfBorrowed, String state, int numOfTotalBorrowed) {
         this.books = books;
         this.readers = readers;
