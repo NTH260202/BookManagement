@@ -1,9 +1,12 @@
 package controller;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.Book;
@@ -24,6 +27,17 @@ public class BookDataController{
         }
     }
 
+    public void openFileToRead() {
+        try {
+            File file = new File("BOOK.DAT");
+            if(!file.exists()) {
+                file.createNewFile();
+            }
+            scanner = new Scanner(Paths.get("BOOK.DAT"), "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void writeBookToFile(Book book) {
         openFileToWrite();
         printWriter.println(book.getId() + "|" + book.getName() + "|" +
@@ -31,7 +45,32 @@ public class BookDataController{
                             book.getPublishYear() + "|" + book.getQuantity());
         closeFileAfterWrite();
     }
+    public ArrayList<Book> readBookFromFile() {
+        openFileToRead();
+        ArrayList<Book> books = new ArrayList<>();
+        while(scanner.hasNextLine()) {
+            String data = scanner.nextLine();
+            Book book = createBookFromData(data);
+            books.add(book);
+        }
+        closeFileAfterRead();
+        return books;
+    }
 
+    private void closeFileAfterRead() {
+    }
+
+    public Book createBookFromData(String data) {
+        String[] datas = data.split("\\|");
+        Book book = new Book();
+        book.setId(Integer.parseInt(datas[0]));
+        book.setName(datas[1]);
+        book.setAuthor(datas[2]);
+        book.setSpecialization(datas[3]);
+        book.setPublishYear(Integer.parseInt(datas[4]));
+        book.setQuantity(Integer.parseInt(datas[5]));
+        return book;
+    }
     public void closeFileAfterWrite() {
         try {
             printWriter.close();
