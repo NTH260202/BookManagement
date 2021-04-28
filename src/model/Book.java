@@ -2,12 +2,13 @@ package model;
 
 public class Book extends Person{
     private String author;
-    private int specialization;
+    private String specialization;
     private int publishYear;
     private int quantity;
 
-    public Book(String name, int id, String author, int specialization, 
-                int publishYear, int quantity) {
+    public Book(String name, int id, String author, 
+                String specialization, int publishYear, 
+                int quantity) {
         super(name, id);
         this.author = author;
         this.specialization = specialization;
@@ -23,11 +24,11 @@ public class Book extends Person{
         return author;
     }
 
-    public void setSpecialization(int specialization) {
+    public void setSpecialization(String specialization) {
         this.specialization = specialization;
     }
 
-    public int getSpecialization() {
+    public String getSpecialization() {
         return specialization;
     }
 
