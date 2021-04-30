@@ -20,9 +20,11 @@ public class View {
         ArrayList<Book> books = new ArrayList<Book>();
         ArrayList<Reader> readers = new ArrayList<Reader>();
         do {
-            System.out.println("MENU");
-            System.out.println("1. Adding a new book to the list.");
-            System.out.println("2. Showing the book list.");
+            System.out.println("________________MENU_________________");
+            System.out.println("1. Adding a new book to the Book list.");
+            System.out.println("2. Showing the Book list.");
+            System.out.println("3. Adding a new book to the Reader list.");
+            System.out.println("4. Showing the Reader list.");
             System.out.println("0.Exit");
             System.out.println("Your choice: ");
         
