@@ -40,7 +40,7 @@ public class BookDataController{
     }
     public void writeBookToFile(Book book) {
         openFileToWrite();
-        printWriter.println(book.getId() + "|" + book.getName() + "|" +
+        printWriter.println(book.getBookId() + "|" + book.getBookName() + "|" +
                             book.getAuthor() + "|" + book.getSpecialization() + "|" + 
                             book.getPublishYear() + "|" + book.getQuantity());
         closeFileAfterWrite();
@@ -63,8 +63,8 @@ public class BookDataController{
     public Book createBookFromData(String data) {
         String[] datas = data.split("\\|");
         Book book = new Book();
-        book.setId(Integer.parseInt(datas[0]));
-        book.setName(datas[1]);
+        book.setBookId(Integer.parseInt(datas[0]));
+        book.setBookName(datas[1]);
         book.setAuthor(datas[2]);
         book.setSpecialization(datas[3]);
         book.setPublishYear(Integer.parseInt(datas[4]));
