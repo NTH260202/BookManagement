@@ -60,6 +60,16 @@ public class Reader extends Person{
     public int getPhone() {
         return phone;
     }
+
+    @Override
+    public String toString() {
+        return "Reader{" +
+                " readerId: " + readerId +
+                " readerName: " + getFullName() +
+                " Address: " + address +
+                " Phone: " + phone +
+                "}";
+    }
 }
 
 
