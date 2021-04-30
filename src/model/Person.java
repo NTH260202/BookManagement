@@ -1,24 +1,28 @@
 package model;
 
 public class Person {
-    private String name;
+    private String fullName;
     private int id;
 
     public Person() {
         
     }
 
-    public Person(String name, int id) {
-        this.name = name;
+    public Person(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Person(String fullName, int id) {
+        this.fullName = fullName;
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
     public void setId(int id) {
