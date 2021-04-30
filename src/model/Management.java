@@ -56,4 +56,17 @@ public class Management {
     public int getNumofTotalBorrowed() {
         return numOfTotalBorrowed;
     }
+
+    @Override
+    public String toString() {
+        return "BookReaderManagement{" + 
+                " reader ID: " + readers.getReaderId() +
+                " readerName: " + readers.getFullName() + 
+                " book ID: " + books.getBookId() +
+                " bookName: " + books.getBookName() +
+                " number of borrowed times: " + numOfBorrowed +
+                " state: " + state + 
+                " total of borrowed times: " + numOfTotalBorrowed + 
+                "}";
+    }
 }
