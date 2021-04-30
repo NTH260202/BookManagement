@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import controller.BookDataController;
+import controller.ManagerDataController;
 import controller.ReaderDataController;
 import model.Book;
+import model.Management;
 import model.Reader;
 
 public class View {
     public static void view() {
         BookDataController bookController = new BookDataController();
         ReaderDataController readerController = new ReaderDataController();
+        ManagerDataController managementController = new ManagerDataController();
         int choice = 0;
         Scanner scanner = new Scanner(System.in);
 
@@ -19,12 +22,14 @@ public class View {
         boolean isReaderChecked = false;
         ArrayList<Book> books = new ArrayList<Book>();
         ArrayList<Reader> readers = new ArrayList<Reader>();
+        ArrayList<Management> managements = new ArrayList<Management>();
         do {
             System.out.println("________________MENU_________________");
             System.out.println("1. Adding a new book to the Book list.");
             System.out.println("2. Showing the Book list.");
             System.out.println("3. Adding a new book to the Reader list.");
             System.out.println("4. Showing the Reader list.");
+            System.out.println("5. Adding the borrowing information to the Management list");
             System.out.println("0.Exit");
             System.out.println("Your choice: ");
         
@@ -103,6 +108,55 @@ public class View {
                 readers = readerController.readReaderFromFile();
                 showReaderInfo(readers);
                 break;
+            case 5:
+                readers = readerController.readReaderFromFile();
+                books = bookController.readBookFromFile();
+                managements = managementController.readManagementFromFile();
+
+                int readerId;
+                int bookId;
+                boolean isBorrowed = false;
+                boolean isFull = false;
+
+                do {
+                    showReaderInfo(readers);
+                    System.out.println("__________________________________");
+                    System.out.println("Enter reader's ID (Enter 0 to exit): ");
+                    readerId = scanner.nextInt();
+                    if (readerId == 0) {
+                        break;
+                    }
+                    isBorrowed = checkBorrowed(managements, readerId);
+                    if (isBorrowed) {
+                        break;
+                    } else {
+                        System.out.println("You have borrowed enough books!.");
+                    }
+                } while (true);
+
+                do{
+                    showBookInfo(books);
+                    System.out.println("___________________________________");
+                    System.out.println("Enter book's ID (Enter 0 to exit): ");
+                    bookId = scanner.nextInt();
+                    if(bookId == 0) {
+                        break;
+                    }
+                    isFull = checkFull(managements, readerId, bookId);
+                    if (isFull) {
+                        System.out.println("Please borrow another book!.");
+                    } else {
+                        break;
+                    }
+                } while (true);
+
+                int total = getTotal(managements, readerId, bookId);
+                do {
+                    System.out.println("Enter the number of books that you have b")
+                }
+
+                break;
+                
         } 
         } while (choice != 0);
         scanner.close();
@@ -137,5 +191,13 @@ public class View {
         for (Reader reader: readers) {
             System.out.println(reader);
         }
+    }
+
+    private static boolean checkBorrowed(ArrayList<Management> managements, int readerId) {
+        
+    }
+
+    private static boolean checkFull(ArrayList<Management> managements, int readerId, int bookId) {
+
     }
 }
