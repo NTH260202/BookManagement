@@ -1,6 +1,9 @@
 package model;
 
-public class Book extends Person{
+public class Book {
+    public static int baseId = 100000;
+    private int bookId;
+    private String bookName;
     private String author;
     private String specialization;
     private int publishYear;
@@ -10,16 +13,49 @@ public class Book extends Person{
         
     }
 
-    public Book(String name, int id, String author, 
+    public Book(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public Book(String bookName, int id, String author, 
                 String specialization, int publishYear, 
                 int quantity) {
-        super(name, id);
+        setBookId();
+        this.bookName = bookName;
         this.author = author;
         this.specialization = specialization;
         this.publishYear = publishYear;
         this.quantity = quantity;
     }
 
+    public static int getBaseId() {
+        return baseId;
+    }
+
+    public static void setBaseId(int baseId) {
+        Book.baseId = baseId;
+    }
+
+    public void setBookId() {
+        this.bookId = baseId++;
+    }
+    
+    public void setBookId(int baseId) {
+        bookId = baseId;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+    
     public void setAuthor(String author) {
         this.author = author;
     }

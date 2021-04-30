@@ -7,7 +7,7 @@ import controller.BookDataController;
 import model.Book;
 
 public class View {
-    public void view() {
+    public static void view() {
         BookDataController bookController = new BookDataController();
         int choice = 0;
         Scanner scanner = new Scanner(System.in);
