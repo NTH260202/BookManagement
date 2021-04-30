@@ -55,7 +55,7 @@ public class Book {
     public String getBookName() {
         return bookName;
     }
-    
+
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -86,5 +86,17 @@ public class Book {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" + 
+                " bookId: " + bookId +
+                " bookName: " + bookName +
+                " author: " + author +
+                " specialization: " + specialization + 
+                " publishYear: " + publishYear + 
+                " quantity: " + quantity +
+                "}";
     }
 }
