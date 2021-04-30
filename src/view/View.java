@@ -152,9 +152,28 @@ public class View {
 
                 int total = getTotal(managements, readerId, bookId);
                 do {
-                    System.out.println("Enter the number of books that you have b")
-                }
+                    System.out.println("Enter the number of books that you have borrowed (the max is 3 books) (borrowed: " + total + "): ");
+                    int temp = scanner.nextInt();
+                    if(temp + total >= 1 && temp + total <= 3) {
+                        total = total + temp;
+                        break;
+                    } else {
+                        System.out.println("Out of borrowing time is permitted. Please enter again!.");
+                    }
+                } while (true);
+                scanner.nextLine();
 
+                System.out.println("Enter the book state: ");
+                String status = "";
+                status = scanner.nextLine();
+
+                Book currentBook = getBook(books, bookId);
+                Reader currentReader = getReader(readers, readerId);
+                Management management = new Management(currentBook, currentReader, total, status, 0);
+                managements = utility.updateBRMInfo(managements, management);// update list Management
+                managementController.updateBRMFile(managements);// update file MANAGEMENT.DAT
+
+                showManagementInfo(managements);
                 break;
                 
         } 
