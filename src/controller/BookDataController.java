@@ -57,9 +57,6 @@ public class BookDataController{
         return books;
     }
 
-    private void closeFileAfterRead() {
-    }
-
     public Book createBookFromData(String data) {
         String[] datas = data.split("\\|");
         Book book = new Book();
@@ -71,11 +68,20 @@ public class BookDataController{
         book.setQuantity(Integer.parseInt(datas[5]));
         return book;
     }
+
     public void closeFileAfterWrite() {
         try {
             printWriter.close();
             bufferedWriter.close();
             fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void closeFileAfterRead() {
+        try {
+            scanner.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
