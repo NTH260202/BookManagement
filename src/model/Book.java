@@ -17,7 +17,7 @@ public class Book {
         this.bookId = bookId;
     }
 
-    public Book(String bookName, int id, String author, 
+    public Book(String bookName, int baseId, String author, 
                 String specialization, int publishYear, 
                 int quantity) {
         setBookId();

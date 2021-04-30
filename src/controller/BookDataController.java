@@ -38,21 +38,27 @@ public class BookDataController{
             e.printStackTrace();
         }
     }
+
     public void writeBookToFile(Book book) {
         openFileToWrite();
+
         printWriter.println(book.getBookId() + "|" + book.getBookName() + "|" +
                             book.getAuthor() + "|" + book.getSpecialization() + "|" + 
                             book.getPublishYear() + "|" + book.getQuantity());
+
         closeFileAfterWrite();
     }
+
     public ArrayList<Book> readBookFromFile() {
         openFileToRead();
+
         ArrayList<Book> books = new ArrayList<>();
         while(scanner.hasNextLine()) {
             String data = scanner.nextLine();
             Book book = createBookFromData(data);
             books.add(book);
         }
+
         closeFileAfterRead();
         return books;
     }
@@ -60,6 +66,7 @@ public class BookDataController{
     public Book createBookFromData(String data) {
         String[] datas = data.split("\\|");
         Book book = new Book();
+        
         book.setBookId(Integer.parseInt(datas[0]));
         book.setBookName(datas[1]);
         book.setAuthor(datas[2]);
