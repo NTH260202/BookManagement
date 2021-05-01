@@ -33,6 +33,7 @@ public class View {
             System.out.println("4. Showing the Reader list.");
             System.out.println("5. Adding the borrowing information to the Management list");
             System.out.println("6. Sorting in the Management list");
+            System.out.println("7. Searching information in the Management list by readers' names.");
             System.out.println("0.Exit");
             System.out.println("Your choice: ");
         
@@ -204,6 +205,17 @@ public class View {
                                 break;
                         }
                     } while (true);
+                    break;
+                case 7:
+                    managements = managementController.readManagementFromFile();
+                    System.out.println("Enter the key words of readers' name:");
+                    String keywords = scanner.nextLine();
+                    ArrayList<Management> result = utility.searchByReaderName(managements, keywords);
+                    if (result.size() == 0) {
+                        System.out.println("Not found!");
+                    } else {
+                        showManagementInfo(result);
+                    }
                     break;
             } 
         } while (choice != 0);
