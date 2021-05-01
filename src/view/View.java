@@ -213,10 +213,52 @@ public class View {
     }
 
     private static boolean checkBorrowed(ArrayList<Management> managements, int readerId) {
-        
+        int count = 0;
+        for (ArrayList<Management> management: managements) {
+            if(management.getReaders().getReaderId() == readerId) {
+                count += management.getNumOfBorrowed();
+            }
+        }
+        if (count == 15) {
+            return false; // can't borrow
+        }
+        return true;
     }
 
     private static boolean checkFull(ArrayList<Management> managements, int readerId, int bookId) {
+        int count = 0;
+        for (ArrayList<Management> management: managements) {
+            if (management.getReaders().getReaderId() == readerId && management.getBooks().getBookId == bookId && management.getNumOfBorrowed() == 3) {
+                return true; // this book can't be borrowed
+            }
+        }
+        return false;
+    }
 
+    private static int getTotal(ArrayList<Management> managements, int readerId, int bookId) {
+        for (ArrayList<Management> management: managements) {
+            if (management.getReaders().getReaderId() == readerId && management.getBooks().getBookId == bookId) {
+                return management.getNumOfBorrowed();
+            }
+        }
+        return 0;
+    }
+
+    private static Book getBook(ArrayList<Book> books, int bookId) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getBookId() == bookId) {
+                return books.get(i);
+            }
+        }
+        return null;
+    }
+
+    private static Reader getReader(ArrayList<Reader> readers, int readerId) {
+        for (int i = 0; i < readers.size(); i++) {
+            if(readers.get(i).getReaderId() == readerId) {
+                return readers.get(i);
+            }
+        }
+        return null;
     }
 }

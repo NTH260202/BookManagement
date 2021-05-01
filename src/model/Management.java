@@ -39,7 +39,7 @@ public class Management {
         this.numOfBorrowed = numOfBorrowed;
     }
 
-    public int getNumofBorrowed() {
+    public int getNumOfBorrowed() {
         return numOfBorrowed;
     }
 
@@ -53,7 +53,7 @@ public class Management {
         this.numOfTotalBorrowed = numOfTotalBorrowed;
     }
 
-    public int getNumofTotalBorrowed() {
+    public int getNumOfTotalBorrowed() {
         return numOfTotalBorrowed;
     }
 
