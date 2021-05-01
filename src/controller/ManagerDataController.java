@@ -9,8 +9,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import controller.BookDataController;
-import controller.ReaderDataController;
 import model.Book;
 import model.Management;
 import model.Reader;
@@ -38,7 +36,7 @@ public class ManagerDataController {
 
     public void openFileToWrite() {
         try {
-            fileWriter = new FileWriter("MANGEMENT.DAT", true);
+            fileWriter = new FileWriter("MANAGEMENT.DAT", true);
             bufferedWriter = new BufferedWriter((fileWriter));
             printWriter = new PrintWriter(bufferedWriter);
         } catch (IOException e) {
