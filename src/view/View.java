@@ -6,6 +6,7 @@ import java.util.Scanner;
 import controller.BookDataController;
 import controller.ManagerDataController;
 import controller.ReaderDataController;
+import controller.Utility;
 import model.Book;
 import model.Management;
 import model.Reader;
@@ -15,6 +16,7 @@ public class View {
         BookDataController bookController = new BookDataController();
         ReaderDataController readerController = new ReaderDataController();
         ManagerDataController managementController = new ManagerDataController();
+        Utility utility = new Utility();
         int choice = 0;
         Scanner scanner = new Scanner(System.in);
 
@@ -170,8 +172,8 @@ public class View {
                 Book currentBook = getBook(books, bookId);
                 Reader currentReader = getReader(readers, readerId);
                 Management management = new Management(currentBook, currentReader, total, status, 0);
-                managements = utility.updateBRMInfo(managements, management);// update list Management
-                managementController.updateBRMFile(managements);// update file MANAGEMENT.DAT
+                managements = utility.updateManagementInfo(managements, management);// update list Management
+                managementController.updateManagementFile(managements);// update file MANAGEMENT.DAT
 
                 showManagementInfo(managements);
                 break;
@@ -232,9 +234,8 @@ public class View {
     }
 
     private static boolean checkFull(ArrayList<Management> managements, int readerId, int bookId) {
-        int count = 0;
         for (Management management: managements) {
-            if (management.getReaders().getReaderId() == readerId && management.getBooks().getBookId == bookId && management.getNumOfBorrowed() == 3) {
+            if (management.getReaders().getReaderId() == readerId && management.getBooks().getBookId() == bookId && management.getNumOfBorrowed() == 3) {
                 return true; // this book can't be borrowed
             }
         }
@@ -243,7 +244,7 @@ public class View {
 
     private static int getTotal(ArrayList<Management> managements, int readerId, int bookId) {
         for (Management management: managements) {
-            if (management.getReaders().getReaderId() == readerId && management.getBooks().getBookId == bookId) {
+            if (management.getReaders().getReaderId() == readerId && management.getBooks().getBookId() == bookId) {
                 return management.getNumOfBorrowed();
             }
         }
