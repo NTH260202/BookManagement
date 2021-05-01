@@ -67,4 +67,17 @@ public class Utility {
         }
         return managements;
     }
+
+    public ArrayList<Management> searchByReaderName(ArrayList<Management> managements, String keyword) {
+        ArrayList<Management> result = new ArrayList<>();
+        String pattern = ".*" + keyword.toLowerCase() + ".*";
+        
+        for (int i = 0; i < managements.size(); i++) {
+            Management management = managements.get(i);
+            if (management.getReaders().getFullName().toLowerCase().matches(pattern)) {
+                result.add(management);
+            }
+        }
+        return result;
+    }
 }
