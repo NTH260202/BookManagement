@@ -244,21 +244,5 @@ public class View {
         return 0;
     }
 
-    private static Book getBook(ArrayList<Book> books, int bookId) {
-        for (int i = 0; i < books.size(); i++) {
-            if (books.get(i).getBookId() == bookId) {
-                return books.get(i);
-            }
-        }
-        return null;
-    }
-
-    private static Reader getReader(ArrayList<Reader> readers, int readerId) {
-        for (int i = 0; i < readers.size(); i++) {
-            if(readers.get(i).getReaderId() == readerId) {
-                return readers.get(i);
-            }
-        }
-        return null;
-    }
+    
 }

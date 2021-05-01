@@ -1,6 +1,10 @@
 package controller;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -31,6 +35,24 @@ public class ManagerDataController {
             e.printStackTrace();
         }
     }
+
+    public void openFileToWrite() {
+        try {
+            fileWriter = new FileWriter("MANGEMENT.DAT", true);
+            bufferedWriter = new BufferedWriter((fileWriter));
+            printWriter = new PrintWriter(bufferedWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeManagementToFile(Management management) {
+        openFileToWrite();
+        printWriter.println(management.getReaders().getReaderId() + "|" + management.getBooks().getBookID() + "|" + 
+                            management.getNumOfBorrowed() + "|" + management.getState());
+        closeFileAfterWrite();    
+    }
+
     public ArrayList<Management> readManagementFromFile() {
         ArrayList<Book> books = bookController.readBookFromFile();
         ArrayList<Reader> readers = readerController.readReaderFromFile();
@@ -48,11 +70,50 @@ public class ManagerDataController {
         return managements;
     }
 
+    public ArrayList<Management> createManagementFromData(String data, ArrayList<Reader> readers, ArrayList<Book> books) {
+        String[] datas = data.split("\\|");
+        Management management = new Management();
+        management.setReaders(getReader(readers, Integer.parseInt(datas[0])));
+        management.setBooks(getBook(books, Integer.parseInt(datas[1])));
+        management.setNumOfBorrowed(Integer.parseInt(datas[2]));
+        management.setState(datas[3]);
+        management.setNumOfTotalBorrowed(0);
+        return management;
+    }
+
     public void closeFileAfterRead() {
         try {
             scanner.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void closeFileAfterWrite() {
+        try {
+            printWriter.close();
+            bufferedWriter.close();
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Book getBook(ArrayList<Book> books, int bookId) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getBookId() == bookId) {
+                return books.get(i);
+            }
+        }
+        return null;
+    }
+
+    private static Reader getReader(ArrayList<Reader> readers, int readerId) {
+        for (int i = 0; i < readers.size(); i++) {
+            if(readers.get(i).getReaderId() == readerId) {
+                return readers.get(i);
+            }
+        }
+        return null;
     }
 }
