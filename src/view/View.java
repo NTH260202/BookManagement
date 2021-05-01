@@ -220,7 +220,7 @@ public class View {
 
     private static boolean checkBorrowed(ArrayList<Management> managements, int readerId) {
         int count = 0;
-        for (ArrayList<Management> management: managements) {
+        for (Management management: managements) {
             if(management.getReaders().getReaderId() == readerId) {
                 count += management.getNumOfBorrowed();
             }
@@ -233,7 +233,7 @@ public class View {
 
     private static boolean checkFull(ArrayList<Management> managements, int readerId, int bookId) {
         int count = 0;
-        for (ArrayList<Management> management: managements) {
+        for (Management management: managements) {
             if (management.getReaders().getReaderId() == readerId && management.getBooks().getBookId == bookId && management.getNumOfBorrowed() == 3) {
                 return true; // this book can't be borrowed
             }
@@ -242,7 +242,7 @@ public class View {
     }
 
     private static int getTotal(ArrayList<Management> managements, int readerId, int bookId) {
-        for (ArrayList<Management> management: managements) {
+        for (Management management: managements) {
             if (management.getReaders().getReaderId() == readerId && management.getBooks().getBookId == bookId) {
                 return management.getNumOfBorrowed();
             }

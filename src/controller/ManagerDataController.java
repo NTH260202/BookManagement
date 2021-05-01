@@ -48,8 +48,10 @@ public class ManagerDataController {
 
     public void writeManagementToFile(Management management) {
         openFileToWrite();
-        printWriter.println(management.getReaders().getReaderId() + "|" + management.getBooks().getBookID() + "|" + 
+
+        printWriter.println(management.getReaders().getReaderId() + "|" + management.getBooks().getBookId() + "|" + 
                             management.getNumOfBorrowed() + "|" + management.getState());
+    
         closeFileAfterWrite();    
     }
 
@@ -70,7 +72,7 @@ public class ManagerDataController {
         return managements;
     }
 
-    public ArrayList<Management> createManagementFromData(String data, ArrayList<Reader> readers, ArrayList<Book> books) {
+    public Management createManagementFromData(String data, ArrayList<Reader> readers, ArrayList<Book> books) {
         String[] datas = data.split("\\|");
         Management management = new Management();
         management.setReaders(getReader(readers, Integer.parseInt(datas[0])));
@@ -79,6 +81,22 @@ public class ManagerDataController {
         management.setState(datas[3]);
         management.setNumOfTotalBorrowed(0);
         return management;
+    }
+
+    public void updateManagementFile(ArrayList<Management> managements) {
+        File file = new File("MANAGEMENT.DAT");
+        if (file.exists()) {
+            file.delete();
+        }
+
+        openFileToWrite();
+
+        for (Management management: managements) {
+        printWriter.println(management.getReaders().getReaderId() + "|" + management.getBooks().getBookId() + "|" + 
+                            management.getNumOfBorrowed() + "|" + management.getState());
+        }
+
+        closeFileAfterWrite();
     }
 
     public void closeFileAfterRead() {
