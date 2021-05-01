@@ -70,6 +70,7 @@ public class ReaderDataController {
         reader.setFullName(datas[1]);
         reader.setAddress(datas[2]);
         reader.setPhone(Integer.parseInt(datas[3]));
+        
         return reader;
     }
 

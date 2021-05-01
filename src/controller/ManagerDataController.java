@@ -73,11 +73,13 @@ public class ManagerDataController {
     public Management createManagementFromData(String data, ArrayList<Reader> readers, ArrayList<Book> books) {
         String[] datas = data.split("\\|");
         Management management = new Management();
+
         management.setReaders(getReader(readers, Integer.parseInt(datas[0])));
         management.setBooks(getBook(books, Integer.parseInt(datas[1])));
         management.setNumOfBorrowed(Integer.parseInt(datas[2]));
         management.setState(datas[3]);
         management.setNumOfTotalBorrowed(0);
+        
         return management;
     }
 
@@ -121,6 +123,7 @@ public class ManagerDataController {
                 return books.get(i);
             }
         }
+
         return null;
     }
 
@@ -130,6 +133,7 @@ public class ManagerDataController {
                 return readers.get(i);
             }
         }
+
         return null;
     }
 }

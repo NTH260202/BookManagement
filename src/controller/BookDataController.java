@@ -30,6 +30,7 @@ public class BookDataController{
     public void openFileToRead() {
         try {
             File file = new File("BOOK.DAT");
+
             if(!file.exists()) {
                 file.createNewFile();
             }
@@ -73,6 +74,7 @@ public class BookDataController{
         book.setSpecialization(datas[3]);
         book.setPublishYear(Integer.parseInt(datas[4]));
         book.setQuantity(Integer.parseInt(datas[5]));
+        
         return book;
     }
 

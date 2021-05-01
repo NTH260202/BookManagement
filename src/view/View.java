@@ -13,18 +13,18 @@ import model.Reader;
 
 public class View {
     public static void view() {
+        Scanner scanner = new Scanner(System.in);
         BookDataController bookController = new BookDataController();
         ReaderDataController readerController = new ReaderDataController();
         ManagerDataController managementController = new ManagerDataController();
         Utility utility = new Utility();
-        int choice = 0;
-        Scanner scanner = new Scanner(System.in);
-
-        boolean isBookChecked = false;
-        boolean isReaderChecked = false;
         ArrayList<Book> books = new ArrayList<Book>();
         ArrayList<Reader> readers = new ArrayList<Reader>();
         ArrayList<Management> managements = new ArrayList<Management>();
+        int choice = 0;
+        boolean isBookChecked = false;
+        boolean isReaderChecked = false;
+       
         do {
             System.out.println("________________MENU_________________");
             System.out.println("1. Adding a new book to the Book list.");
@@ -36,7 +36,6 @@ public class View {
             System.out.println("7. Searching information in the Management list by readers' names.");
             System.out.println("0.Exit");
             System.out.println("Your choice: ");
-        
             choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -46,11 +45,6 @@ public class View {
                     System.out.println("Thanks for using our application!");
                     break;
                 case 1:
-                    if (!isBookChecked) {
-                    checkBookId(bookController);
-                    isBookChecked = true;
-                    };
-
                     String[] specs = {"Science", "Art", "Economic", "IT"};
                     String bookName;
                     String author;
@@ -58,6 +52,11 @@ public class View {
                     int year;
                     int quan;
                     int kindOfBook;
+
+                    if (!isBookChecked) {
+                        checkBookId(bookController);
+                        isBookChecked = true;
+                    };
 
                     System.out.println("Enter the book's name: ");
                     bookName = scanner.nextLine();
@@ -87,14 +86,14 @@ public class View {
                     showBookInfo(books);
                     break;
                 case 3:
+                    String readerName;
+                    String address;
+                    int phone;
+
                     if (!isReaderChecked) {
                         checkReaderId(readerController);
                         isReaderChecked = true;
                     }
-
-                    String readerName;
-                    String address;
-                    int phone;
 
                     System.out.println("Enter the reader's name: ");
                     readerName = scanner.nextLine();
@@ -113,14 +112,14 @@ public class View {
                     showReaderInfo(readers);
                     break;
                 case 5:
-                    readers = readerController.readReaderFromFile();
-                    books = bookController.readBookFromFile();
-                    managements = managementController.readManagementFromFile();
-
                     int readerId;
                     int bookId;
                     boolean isBorrowed = false;
                     boolean isFull = false;
+
+                    readers = readerController.readReaderFromFile();
+                    books = bookController.readBookFromFile();
+                    managements = managementController.readManagementFromFile();
 
                     do {
                         showReaderInfo(readers);
@@ -176,15 +175,16 @@ public class View {
                     Management management = new Management(currentBook, currentReader, total, status, 0);
                     managements = utility.updateManagementInfo(managements, management);// update list Management
                     managementController.updateManagementFile(managements);// update file MANAGEMENT.DAT
-
                     showManagementInfo(managements);
                     break;
                 case 6:
+                    int choice_1 = 0;
+
                     managements = managementController.readManagementFromFile();
                     managements = utility.updateTotalBorrowed(managements);
+
                     System.out.println("___________________________________________");
                     System.out.println("______________Method to Sorting____________");
-                    int choice_1 = 0;
                     do {
                         System.out.println("1. Sorting as readers' names.");
                         System.out.println("2. Sorting as numbers of borrowed times;");
@@ -208,6 +208,7 @@ public class View {
                     break;
                 case 7:
                     managements = managementController.readManagementFromFile();
+
                     System.out.println("Enter the key words of readers' name:");
                     String keywords = scanner.nextLine();
                     ArrayList<Management> result = utility.searchByReaderName(managements, keywords);
@@ -269,6 +270,7 @@ public class View {
         if (count == 15) {
             return false; // can't borrow
         }
+
         return true;
     }
 
@@ -278,6 +280,7 @@ public class View {
                 return true; // this book can't be borrowed
             }
         }
+
         return false;
     }
 
@@ -287,6 +290,7 @@ public class View {
                 return management.getNumOfBorrowed();
             }
         }
+
         return 0;
     }
 
@@ -296,6 +300,7 @@ public class View {
                 return books.get(i);
             }
         }
+
         return null;
     }
    
@@ -306,6 +311,7 @@ public class View {
                 return readers.get(i);
             }
         }
+        
         return null;
     }
 }
