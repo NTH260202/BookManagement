@@ -32,6 +32,7 @@ public class View {
             System.out.println("3. Adding a new book to the Reader list.");
             System.out.println("4. Showing the Reader list.");
             System.out.println("5. Adding the borrowing information to the Management list");
+            System.out.println("6. Sorting in the Management list");
             System.out.println("0.Exit");
             System.out.println("Your choice: ");
         
@@ -176,6 +177,33 @@ public class View {
                     managementController.updateManagementFile(managements);// update file MANAGEMENT.DAT
 
                     showManagementInfo(managements);
+                    break;
+                case 6:
+                    managements = managementController.readManagementFromFile();
+                    managements = utility.updateTotalBorrowed(managements);
+                    System.out.println("___________________________________________");
+                    System.out.println("______________Method to Sorting____________");
+                    int choice_1 = 0;
+                    do {
+                        System.out.println("1. Sorting as readers' names.");
+                        System.out.println("2. Sorting as numbers of borrowed times;");
+                        System.out.println("0. Back to main menu.");
+                        System.out.println("Your choice:");
+                        choice_1 = scanner.nextInt();
+                        if (choice_1 == 0) {
+                            break;
+                        }
+                        switch (choice_1) {
+                            case 1:
+                                managements = utility.sortByReaderName(managements);
+                                showManagementInfo(managements);
+                                break;
+                            case 2:
+                                managements = utility.sortByReaderName(managements);
+                                showManagementInfo(managements);
+                                break;
+                        }
+                    } while (true);
                     break;
             } 
         } while (choice != 0);
