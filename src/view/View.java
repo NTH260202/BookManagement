@@ -79,10 +79,10 @@ public class View {
                     quan = scanner.nextInt();
 
                     Book book = new Book(bookName, 0, author, spec, year, quan);
-                    bookController.writeBookToFile(book);
+                    bookController.write(book);
                     break;
                 case 2:
-                    books = bookController.readBookFromFile();
+                    books = bookController.read();
                     showBookInfo(books);
                     break;
                 case 3:
@@ -105,10 +105,10 @@ public class View {
                     phone = scanner.nextInt();
 
                     Reader reader = new Reader(0, readerName, address, phone);
-                    readerController.writeReaderToFile(reader);
+                    readerController.write(reader);
                     break;
                 case 4:
-                    readers = readerController.readReaderFromFile();
+                    readers = readerController.read();
                     showReaderInfo(readers);
                     break;
                 case 5:
@@ -117,9 +117,9 @@ public class View {
                     boolean isBorrowed = false;
                     boolean isFull = false;
 
-                    readers = readerController.readReaderFromFile();
-                    books = bookController.readBookFromFile();
-                    managements = managementController.readManagementFromFile();
+                    readers = readerController.read();
+                    books = bookController.read();
+                    managements = managementController.read();
 
                     do {
                         showReaderInfo(readers);
@@ -174,13 +174,13 @@ public class View {
                     Reader currentReader = getReader(readers, readerId);
                     Management management = new Management(currentBook, currentReader, total, status, 0);
                     managements = utility.updateManagementInfo(managements, management);// update list Management
-                    managementController.updateManagementFile(managements);// update file MANAGEMENT.DAT
+                    managementController.update(managements);// update file MANAGEMENT.DAT
                     showManagementInfo(managements);
                     break;
                 case 6:
                     int choice_1 = 0;
 
-                    managements = managementController.readManagementFromFile();
+                    managements = managementController.read();
                     managements = utility.updateTotalBorrowed(managements);
 
                     System.out.println("___________________________________________");
@@ -207,7 +207,7 @@ public class View {
                     } while (true);
                     break;
                 case 7:
-                    managements = managementController.readManagementFromFile();
+                    managements = managementController.read();
 
                     System.out.println("Enter the key words of readers' name:");
                     String keywords = scanner.nextLine();
@@ -224,7 +224,7 @@ public class View {
     }
 
     private static void checkBookId(BookDataController bookController) {
-        ArrayList<Book> listBooks = bookController.readBookFromFile();
+        ArrayList<Book> listBooks = bookController.read();
         if (listBooks.size() == 0) {
             //do nothing
         } else {
@@ -233,7 +233,7 @@ public class View {
     }
 
     private static void checkReaderId(ReaderDataController readerController) {
-        ArrayList<Reader> listReaders = readerController.readReaderFromFile();
+        ArrayList<Reader> listReaders = readerController.read();
         if (listReaders.size() == 0) {
             //do nothing
         } else {

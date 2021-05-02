@@ -11,12 +11,13 @@ import java.util.Scanner;
 
 import model.Book;
 
-public class BookDataController{
+public class BookDataController implements FileConnection<Book>{
     private FileWriter fileWriter;
     private BufferedWriter bufferedWriter;
     private PrintWriter printWriter;
     private Scanner scanner;
 
+    @Override
     public void openFileToWrite() {
         try {
             fileWriter = new FileWriter("BOOK.DAT", true);
@@ -27,6 +28,7 @@ public class BookDataController{
         }
     }
 
+    @Override
     public void openFileToRead() {
         try {
             File file = new File("BOOK.DAT");
@@ -40,7 +42,8 @@ public class BookDataController{
         }
     }
 
-    public void writeBookToFile(Book book) {
+    @Override
+    public void write(Book book) {
         openFileToWrite();
 
         printWriter.println(book.getBookId() + "|" + book.getBookName() + "|" +
@@ -50,7 +53,8 @@ public class BookDataController{
         closeFileAfterWrite();
     }
 
-    public ArrayList<Book> readBookFromFile() {
+    @Override
+    public ArrayList<Book> read() {
         openFileToRead();
 
         ArrayList<Book> books = new ArrayList<>();
@@ -78,6 +82,12 @@ public class BookDataController{
         return book;
     }
 
+    @Override
+    public void update(ArrayList<Book> t) {
+        
+    }
+
+    @Override
     public void closeFileAfterWrite() {
         try {
             printWriter.close();
@@ -88,6 +98,7 @@ public class BookDataController{
         }
     }
 
+    @Override
     public void closeFileAfterRead() {
         try {
             scanner.close();
@@ -95,4 +106,6 @@ public class BookDataController{
             e.printStackTrace();
         }
     }
+
+    
 }

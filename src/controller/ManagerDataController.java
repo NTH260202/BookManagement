@@ -13,7 +13,7 @@ import model.Book;
 import model.Management;
 import model.Reader;
 
-public class ManagerDataController {
+public class ManagerDataController implements FileConnection<Management>{
     private FileWriter fileWriter;
     private BufferedWriter bufferedWriter;
     private PrintWriter printWriter;
@@ -22,6 +22,7 @@ public class ManagerDataController {
     BookDataController bookController = new BookDataController();
     ReaderDataController readerController = new ReaderDataController();
 
+    @Override
     public void openFileToRead() {
         try {
             File file = new File("MANAGEMENT.DAT");
@@ -34,6 +35,7 @@ public class ManagerDataController {
         }
     }
 
+    @Override
     public void openFileToWrite() {
         try {
             fileWriter = new FileWriter("MANAGEMENT.DAT", true);
@@ -44,7 +46,8 @@ public class ManagerDataController {
         }
     }
 
-    public void writeManagementToFile(Management management) {
+    @Override
+    public void write(Management management) {
         openFileToWrite();
 
         printWriter.println(management.getReaders().getReaderId() + "|" + management.getBooks().getBookId() + "|" + 
@@ -53,9 +56,10 @@ public class ManagerDataController {
         closeFileAfterWrite();    
     }
 
-    public ArrayList<Management> readManagementFromFile() {
-        ArrayList<Book> books = bookController.readBookFromFile();
-        ArrayList<Reader> readers = readerController.readReaderFromFile();
+    @Override
+    public ArrayList<Management> read() {
+        ArrayList<Book> books = bookController.read();
+        ArrayList<Reader> readers = readerController.read();
 
         openFileToRead();
 
@@ -83,7 +87,8 @@ public class ManagerDataController {
         return management;
     }
 
-    public void updateManagementFile(ArrayList<Management> managements) {
+    @Override
+    public void update(ArrayList<Management> managements) {
         File file = new File("MANAGEMENT.DAT");
         if (file.exists()) {
             file.delete();
@@ -99,6 +104,7 @@ public class ManagerDataController {
         closeFileAfterWrite();
     }
 
+    @Override
     public void closeFileAfterRead() {
         try {
             scanner.close();
@@ -107,6 +113,7 @@ public class ManagerDataController {
         }
     }
 
+    @Override
     public void closeFileAfterWrite() {
         try {
             printWriter.close();
