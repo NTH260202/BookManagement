@@ -10,9 +10,9 @@ public interface DAO<T> {
     void write(T t);
     ArrayList<T> read();
     void update(ArrayList<T> t);
-    Reader createReader(String t);
-    Book createBook(String t);
-    Management createManagement(String t, ArrayList<Book> t_2, ArrayList<Reader> t_3);
+    Reader createReader(String data);
+    Book createBook(String data);
+    Management createManagement(String data, ArrayList<Book> books, ArrayList<Reader> readers);
     
 
 }
