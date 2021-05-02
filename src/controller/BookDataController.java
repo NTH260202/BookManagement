@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.Book;
+import model.Management;
+import model.Reader;
 
 public class BookDataController implements FileConnection<Book>{
     private FileWriter fileWriter;
@@ -60,7 +62,7 @@ public class BookDataController implements FileConnection<Book>{
         ArrayList<Book> books = new ArrayList<>();
         while(scanner.hasNextLine()) {
             String data = scanner.nextLine();
-            Book book = createBookFromData(data);
+            Book book = createBook(data);
             books.add(book);
         }
 
@@ -68,7 +70,18 @@ public class BookDataController implements FileConnection<Book>{
         return books;
     }
 
-    public Book createBookFromData(String data) {
+    @Override
+    public Reader createReader(String data) {
+        return null;
+    }
+
+    @Override
+    public Management createManagement(String data, ArrayList<Book> books, ArrayList<Reader> readers) {
+        return null;
+    }
+
+    @Override
+    public Book createBook(String data) {
         String[] datas = data.split("\\|");
         Book book = new Book();
         

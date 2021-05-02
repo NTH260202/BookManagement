@@ -13,7 +13,7 @@ import model.Book;
 import model.Management;
 import model.Reader;
 
-public class ManagerDataController implements FileConnection<Management>{
+public class ManagerDataController implements FileConnection<Management> {
     private FileWriter fileWriter;
     private BufferedWriter bufferedWriter;
     private PrintWriter printWriter;
@@ -66,7 +66,7 @@ public class ManagerDataController implements FileConnection<Management>{
         ArrayList<Management> managements = new ArrayList<>();
         while (scanner.hasNextLine()) {
             String data = scanner.nextLine();
-            Management management = createManagementFromData(data, readers, books);
+            Management management = createManagement(data, books, readers);
             managements.add(management);
         }
 
@@ -74,7 +74,18 @@ public class ManagerDataController implements FileConnection<Management>{
         return managements;
     }
 
-    public Management createManagementFromData(String data, ArrayList<Reader> readers, ArrayList<Book> books) {
+    @Override
+    public Book createBook(String data) {
+        return null;
+    }
+
+    @Override
+    public Reader createReader(String data) {
+        return null;
+    }
+
+    @Override
+    public Management createManagement(String data, ArrayList<Book> books, ArrayList<Reader> readers) {
         String[] datas = data.split("\\|");
         Management management = new Management();
 

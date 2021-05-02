@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import model.Book;
+import model.Management;
 import model.Reader;
 
 public class ReaderDataController implements FileConnection<Reader> {
@@ -58,7 +60,7 @@ public class ReaderDataController implements FileConnection<Reader> {
         ArrayList<Reader> readers = new ArrayList<>();
         while (scanner.hasNextLine()) {
             String data = scanner.nextLine();
-            Reader reader = createReaderFromData(data);
+            Reader reader = createReader(data);
             readers.add(reader);
         }
 
@@ -66,7 +68,18 @@ public class ReaderDataController implements FileConnection<Reader> {
         return readers;
     }
 
-    public Reader createReaderFromData(String data) {
+    @Override
+    public Book createBook(String data) {
+        return null;
+    }
+
+    @Override 
+    public Management createManagement(String data, ArrayList<Book> books, ArrayList<Reader> readers) {
+        return null;
+    }
+
+    @Override
+    public Reader createReader(String data) {
         String[] datas = data.split("\\|");
         Reader reader = new Reader();
 
