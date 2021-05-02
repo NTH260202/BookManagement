@@ -11,7 +11,8 @@ public class Management {
         
     }
 
-    public Management(Book books, Reader readers, int numOfBorrowed, String state, int numOfTotalBorrowed) {
+    public Management(Book books, Reader readers, int numOfBorrowed, 
+                    String state, int numOfTotalBorrowed) {
         this.books = books;
         this.readers = readers;
         this.numOfBorrowed = numOfBorrowed;
@@ -46,9 +47,11 @@ public class Management {
     public void setState(String state) {
         this.state = state;
     }
+
     public String getState() {
         return state;
     }
+    
     public void setNumOfTotalBorrowed(int numOfTotalBorrowed) {
         this.numOfTotalBorrowed = numOfTotalBorrowed;
     }
