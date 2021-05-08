@@ -170,8 +170,8 @@ public class View {
                     String status = "";
                     status = scanner.nextLine();
 
-                    Book currentBook = getBook(books, bookId);
-                    Reader currentReader = getReader(readers, readerId);
+                    Book currentBook = ManagerDataController.getBook(books, bookId);
+                    Reader currentReader = ManagerDataController.getReader(readers, readerId);
                     Management management = new Management(currentBook, currentReader, total, status, 0);
                     managements = utility.updateManagementInfo(managements, management);// update list Management
                     managementController.update(managements);// update file MANAGEMENT.DAT
@@ -294,24 +294,4 @@ public class View {
         return 0;
     }
 
-    private static Book getBook(ArrayList<Book> books, int bookId) {
-        for(int i = 0; i < books.size();  i ++) {
-            if(books.get(i).getBookId() == bookId) {
-                return books.get(i);
-            }
-        }
-
-        return null;
-    }
-   
-
-    private static Reader getReader(ArrayList<Reader> readers, int readerId) {
-        for(int i = 0; i < readers.size(); i ++) {
-            if(readers.get(i).getReaderId() == readerId) {
-                return readers.get(i);
-            }
-        }
-        
-        return null;
-    }
 }

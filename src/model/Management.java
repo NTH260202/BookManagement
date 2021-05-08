@@ -20,20 +20,20 @@ public class Management {
         this.numOfTotalBorrowed = numOfTotalBorrowed;
     }
 
-    public void setBooks(Book books) {
-        this.books = books;
-    }
-
-    public Book getBooks() {
-        return books;
-    }
-
     public void setReaders(Reader readers) {
         this.readers = readers;
     }
 
     public Reader getReaders() {
         return readers;
+    }
+
+    public void setBooks(Book books) {
+        this.books = books;
+    }
+
+    public Book getBooks() {
+        return books;
     }
 
     public void setNumOfBorrowed(int numOfBorrowed) {

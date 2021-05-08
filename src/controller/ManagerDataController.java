@@ -135,7 +135,7 @@ public class ManagerDataController implements FileConnection<Management> {
         }
     }
 
-    private static Book getBook(ArrayList<Book> books, int bookId) {
+    public static Book getBook(ArrayList<Book> books, int bookId) {
         for (int i = 0; i < books.size(); i++) {
             if (books.get(i).getBookId() == bookId) {
                 return books.get(i);
@@ -145,7 +145,7 @@ public class ManagerDataController implements FileConnection<Management> {
         return null;
     }
 
-    private static Reader getReader(ArrayList<Reader> readers, int readerId) {
+    public static Reader getReader(ArrayList<Reader> readers, int readerId) {
         for (int i = 0; i < readers.size(); i++) {
             if(readers.get(i).getReaderId() == readerId) {
                 return readers.get(i);
