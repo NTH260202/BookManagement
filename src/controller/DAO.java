@@ -1,18 +1,15 @@
 package controller;
 
-import java.util.ArrayList;
-
-import model.Book;
-import model.Management;
-import model.Reader;
+import java.util.List;
+import java.util.Optional;
 
 public interface DAO<T> {
+    List<T> getAll();
+    Optional<T> get(int id);
     void write(T t);
-    ArrayList<T> read();
-    void update(ArrayList<T> t);
-    Reader createReader(String data);
-    Book createBook(String data);
-    Management createManagement(String data, ArrayList<Book> books, ArrayList<Reader> readers);
+    List<T> read();
+    void update(List<T> t);
+   
     
 
 }

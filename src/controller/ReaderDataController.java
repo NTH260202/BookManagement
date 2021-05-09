@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
-import model.Book;
-import model.Management;
 import model.Reader;
 
 public class ReaderDataController implements FileConnection<Reader> {
@@ -19,67 +19,64 @@ public class ReaderDataController implements FileConnection<Reader> {
     private PrintWriter printWriter;
     private Scanner scanner;
 
-    @Override
-    public void openFileToWrite() {
-        try {
-            fileWriter = new FileWriter("READER.DAT", true);
-            bufferedWriter = new BufferedWriter(fileWriter);
-            printWriter = new PrintWriter(bufferedWriter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    List<Reader> readers = new ArrayList<>();
 
     @Override
-    public void openFileToRead() {
-        try {
-            File file = new File("READER.DAT");
-            if(!file.exists()) {
-                file.createNewFile();
+    public void open(boolean readMode) {
+        if (readMode) {
+            try {
+                File file = new File("READER.DAT");
+    
+                if(!file.exists()) {
+                    file.createNewFile();
+                }
+                scanner = new Scanner(Paths.get("READER.DAT"), "UTF-8");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            scanner = new Scanner(Paths.get("READER.DAT"), "UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            try {
+                fileWriter = new FileWriter("READER.DAT", true);
+                bufferedWriter = new BufferedWriter(fileWriter);
+                printWriter = new PrintWriter(bufferedWriter);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        
     }
 
     @Override
     public void write(Reader reader) {
-        openFileToWrite();
+        boolean READMODE = false;
+
+        open(READMODE);
 
         printWriter.println(reader.getReaderId() + "|" + reader.getFullName() + "|" +
                             reader.getAddress() + "|" + reader.getPhone());
         
-        closeFileAfterWrite();
+        close(READMODE);
     }
 
     @Override
     public ArrayList<Reader> read() {
-        openFileToRead();
+        boolean READMODE = true;
+       
+        open(READMODE);
 
         ArrayList<Reader> readers = new ArrayList<>();
         while (scanner.hasNextLine()) {
             String data = scanner.nextLine();
-            Reader reader = createReader(data);
+            Reader reader = create(data);
             readers.add(reader);
         }
 
-        closeFileAfterRead();
+        close(READMODE);
         return readers;
     }
 
     @Override
-    public Book createBook(String data) {
-        return null;
-    }
-
-    @Override 
-    public Management createManagement(String data, ArrayList<Book> books, ArrayList<Reader> readers) {
-        return null;
-    }
-
-    @Override
-    public Reader createReader(String data) {
+    public Reader create(String data) {
         String[] datas = data.split("\\|");
         Reader reader = new Reader();
 
@@ -92,29 +89,38 @@ public class ReaderDataController implements FileConnection<Reader> {
     }
 
     @Override
-    public void update(ArrayList<Reader> readers) {
+    public void update(List<Reader> readers) {
 
     }
 
     @Override
-    public void closeFileAfterWrite() {
-        try {
-            printWriter.close();
-            bufferedWriter.close();
-            fileWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void close(boolean readMode) {
+        if (readMode) {
+            try {
+                scanner.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                printWriter.close();
+                bufferedWriter.close();
+                fileWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        
     }
 
     @Override
-    public void closeFileAfterRead() {
-        try {
-            scanner.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public List<Reader> getAll() {
+        return readers;
+    }
+
+    @Override
+    public Optional<Reader> get(int readerId) {
+        return readers.stream().filter(u -> u.getReaderId() == readerId).findFirst();
     }
 }
-
 

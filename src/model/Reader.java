@@ -3,7 +3,6 @@ package model;
 public class Reader extends Person{
     private static int baseId = 10000000;
     private int readerId;
-    private String address;
     private int phone;
 
     public Reader() {
@@ -14,15 +13,14 @@ public class Reader extends Person{
         this.readerId = readerId;
     }
 
-    public Reader(String name, int id) {
-        super(name, id);
+    public Reader(String name, String address) {
+        super(name, address);
     }
 
     public Reader(int readerId, String fullName, String address, int phone) {
-        super(fullName);
+        super(fullName, address);
         setReaderId();
         this.phone = phone;
-        this.address = address;
     }
 
     public static int getBaseId() {
@@ -45,14 +43,6 @@ public class Reader extends Person{
         return readerId;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
     public void setPhone(int phone) {
         this.phone = phone;
     }
@@ -66,7 +56,7 @@ public class Reader extends Person{
         return "Reader{" +
                 " readerId: " + readerId +
                 " readerName: " + getFullName() +
-                " Address: " + address +
+                " Address: " + getAddress() +
                 " Phone: " + phone +
                 "}";
     }

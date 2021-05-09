@@ -170,8 +170,8 @@ public class View {
                     String status = "";
                     status = scanner.nextLine();
 
-                    Book currentBook = ManagerDataController.getBook(books, bookId);
-                    Reader currentReader = ManagerDataController.getReader(readers, readerId);
+                    Book currentBook = bookController.get(bookId).get();
+                    Reader currentReader = readerController.get(readerId).get();
                     Management management = new Management(currentBook, currentReader, total, status, 0);
                     managements = utility.updateManagementInfo(managements, management);// update list Management
                     managementController.update(managements);// update file MANAGEMENT.DAT

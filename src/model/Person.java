@@ -2,7 +2,7 @@ package model;
 
 public class Person {
     private String fullName;
-    private int id;
+    private String address;
 
     public Person() {
         
@@ -12,9 +12,9 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public Person(String fullName, int id) {
+    public Person(String fullName, String address) {
         this.fullName = fullName;
-        this.id = id;
+        this.address = address;
     }
 
     public void setFullName(String fullName) {
@@ -25,11 +25,11 @@ public class Person {
         return fullName;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public int getId() {
-        return id;
+    public String getAddress() {
+        return address;
     }
 }

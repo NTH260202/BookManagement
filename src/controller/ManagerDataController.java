@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
-import model.Book;
 import model.Management;
-import model.Reader;
 
 public class ManagerDataController implements FileConnection<Management> {
     private FileWriter fileWriter;
@@ -19,78 +19,72 @@ public class ManagerDataController implements FileConnection<Management> {
     private PrintWriter printWriter;
     private Scanner scanner;
 
-    BookDataController bookController = new BookDataController();
-    ReaderDataController readerController = new ReaderDataController();
+    List<Management> managements = new ArrayList<>();
 
     @Override
-    public void openFileToRead() {
-        try {
-            File file = new File("MANAGEMENT.DAT");
-            if(!file.exists()) {
-                file.createNewFile();
+    public void open(boolean readMode) {
+        if (readMode) {
+            try {
+                File file = new File("MANAGEMENT.DAT");
+    
+                if(!file.exists()) {
+                    file.createNewFile();
+                }
+                scanner = new Scanner(Paths.get("MANAGEMENT.DAT"), "UTF-8");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            scanner = new Scanner(Paths.get("MANAGEMENT.DAT"), "UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            try {
+                fileWriter = new FileWriter("MANAGEMENT.DAT", true);
+                bufferedWriter = new BufferedWriter(fileWriter);
+                printWriter = new PrintWriter(bufferedWriter);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-    }
-
-    @Override
-    public void openFileToWrite() {
-        try {
-            fileWriter = new FileWriter("MANAGEMENT.DAT", true);
-            bufferedWriter = new BufferedWriter((fileWriter));
-            printWriter = new PrintWriter(bufferedWriter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
     }
 
     @Override
     public void write(Management management) {
-        openFileToWrite();
+        boolean READMODE = false;
+
+        open(READMODE);
 
         printWriter.println(management.getReaders().getReaderId() + "|" + management.getBooks().getBookId() + "|" + 
                             management.getNumOfBorrowed() + "|" + management.getState());
     
-        closeFileAfterWrite();    
+        close(READMODE);    
     }
 
     @Override
     public ArrayList<Management> read() {
-        ArrayList<Book> books = bookController.read();
-        ArrayList<Reader> readers = readerController.read();
+        boolean READMODE = true;
 
-        openFileToRead();
+        open(READMODE);
 
         ArrayList<Management> managements = new ArrayList<>();
         while (scanner.hasNextLine()) {
             String data = scanner.nextLine();
-            Management management = createManagement(data, books, readers);
+            Management management = create(data);
             managements.add(management);
         }
 
-        closeFileAfterRead();
+        close(READMODE);
         return managements;
     }
 
     @Override
-    public Book createBook(String data) {
-        return null;
-    }
-
-    @Override
-    public Reader createReader(String data) {
-        return null;
-    }
-
-    @Override
-    public Management createManagement(String data, ArrayList<Book> books, ArrayList<Reader> readers) {
+    public Management create(String data) {
         String[] datas = data.split("\\|");
+        BookDataController bookDataController = new BookDataController();
+        ReaderDataController readerDataController = new ReaderDataController();
         Management management = new Management();
+        System.out.println(Integer.parseInt(datas[0]));
 
-        management.setReaders(getReader(readers, Integer.parseInt(datas[0])));
-        management.setBooks(getBook(books, Integer.parseInt(datas[1])));
+        management.setReaders(readerDataController.get(Integer.parseInt(datas[0])).get());
+        management.setBooks((bookDataController.get(Integer.parseInt(datas[1])).get()));
         management.setNumOfBorrowed(Integer.parseInt(datas[2]));
         management.setState(datas[3]);
         management.setNumOfTotalBorrowed(0);
@@ -99,59 +93,70 @@ public class ManagerDataController implements FileConnection<Management> {
     }
 
     @Override
-    public void update(ArrayList<Management> managements) {
+    public void update(List<Management> managements) {
+        boolean READMODE = false;
         File file = new File("MANAGEMENT.DAT");
         if (file.exists()) {
             file.delete();
         }
 
-        openFileToWrite();
+        open(READMODE);
 
         for (Management management: managements) {
         printWriter.println(management.getReaders().getReaderId() + "|" + management.getBooks().getBookId() + "|" + 
                             management.getNumOfBorrowed() + "|" + management.getState());
         }
 
-        closeFileAfterWrite();
+        close(READMODE);
     }
 
     @Override
-    public void closeFileAfterRead() {
-        try {
-            scanner.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void close(boolean readMode) {
+        if (readMode) {
+            try {
+                scanner.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                printWriter.close();
+                bufferedWriter.close();
+                fileWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        
     }
 
     @Override
-    public void closeFileAfterWrite() {
-        try {
-            printWriter.close();
-            bufferedWriter.close();
-            fileWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public List<Management> getAll() {
+        return managements;
     }
 
-    public static Book getBook(ArrayList<Book> books, int bookId) {
-        for (int i = 0; i < books.size(); i++) {
-            if (books.get(i).getBookId() == bookId) {
-                return books.get(i);
-            }
-        }
-
-        return null;
+    @Override
+    public Optional<Management> get(int readerId) {
+        return managements.stream().filter(u -> u.getReaders().getReaderId() == readerId).findFirst();
     }
 
-    public static Reader getReader(ArrayList<Reader> readers, int readerId) {
-        for (int i = 0; i < readers.size(); i++) {
-            if(readers.get(i).getReaderId() == readerId) {
-                return readers.get(i);
-            }
-        }
+    // //public static Book getBook(ArrayList<Book> books, int bookId) {
+    //     for (int i = 0; i < books.size(); i++) {
+    //         if (books.get(i).getBookId() == bookId) {
+    //             return books.get(i);
+    //         }
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
+
+    // public static Reader getReader(ArrayList<Reader> readers, int readerId) {
+    //     for (int i = 0; i < readers.size(); i++) {
+    //         if(readers.get(i).getReaderId() == readerId) {
+    //             return readers.get(i);
+    //         }
+    //     }
+
+    //     return null;
+    // }
 }
