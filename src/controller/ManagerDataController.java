@@ -84,7 +84,7 @@ public class ManagerDataController implements FileConnection<Management> {
         System.out.println(Integer.parseInt(datas[0]));
 
         management.setReaders(readerDataController.get(Integer.parseInt(datas[0])).get());
-        management.setBooks((bookDataController.get(Integer.parseInt(datas[1])).get()));
+        management.setBooks(bookDataController.get(Integer.parseInt(datas[1])).get());
         management.setNumOfBorrowed(Integer.parseInt(datas[2]));
         management.setState(datas[3]);
         management.setNumOfTotalBorrowed(0);

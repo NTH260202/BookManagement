@@ -120,6 +120,7 @@ public class ReaderDataController implements FileConnection<Reader> {
 
     @Override
     public Optional<Reader> get(int readerId) {
+        this.readers = read();
         return readers.stream().filter(u -> u.getReaderId() == readerId).findFirst();
     }
 }

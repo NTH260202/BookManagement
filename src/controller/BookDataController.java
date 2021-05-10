@@ -121,6 +121,7 @@ public class BookDataController implements FileConnection<Book>{
 
     @Override
     public Optional<Book> get(int bookId) {
+        this.books = read();
         return books.stream().filter(u -> u.getBookId() == bookId).findFirst();
     }
     
