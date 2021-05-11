@@ -161,7 +161,7 @@ public class View {
                             total = total + temp;
                             break;
                         } else {
-                            System.out.println("Out of borrowing time is permitted. Please enter again!.");
+                            System.out.println("Out of borrowing books is permitted. Please enter again!.");
                         }
                     } while (true);
                     scanner.nextLine();
@@ -249,12 +249,14 @@ public class View {
     }
 
     private static void showReaderInfo(ArrayList<Reader> readers) {
+        System.out.println("_____________Reader Information in List____________");
         for (Reader reader: readers) {
             System.out.println(reader);
         }
     }
 
     private static void showManagementInfo(ArrayList<Management> managements) {
+        System.out.println("_____________Management Information in List____________");
         for(Management management: managements) {
             System.out.println(management);
         }

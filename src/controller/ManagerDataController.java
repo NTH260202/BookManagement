@@ -81,7 +81,6 @@ public class ManagerDataController implements FileConnection<Management> {
         BookDataController bookDataController = new BookDataController();
         ReaderDataController readerDataController = new ReaderDataController();
         Management management = new Management();
-        System.out.println(Integer.parseInt(datas[0]));
 
         management.setReaders(readerDataController.get(Integer.parseInt(datas[0])).get());
         management.setBooks(bookDataController.get(Integer.parseInt(datas[1])).get());
